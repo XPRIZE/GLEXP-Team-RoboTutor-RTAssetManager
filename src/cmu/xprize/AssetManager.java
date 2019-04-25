@@ -107,7 +107,7 @@ package cmu.xprize;
            } else {
              AssetFile = SRCFOLDER + ".json";
 
-             targetAsset.loadAssetFactory(BASEFOLDER + File.separator + AssetFile);
+             targetAsset.loadAssetFactory(BASEFOLDER + File.separator + AssetFile); // TODO goes here every time
 
              DSTFOLDER = targetAsset.getVersionedName();
            }
