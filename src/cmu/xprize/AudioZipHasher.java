@@ -131,15 +131,15 @@ public class AudioZipHasher
 
 
 
-                processVirtualFolderAssets(srcPath, outputPath, Boolean.valueOf(true));
+                processVirtualFolderAssets(srcPath, outputPath);
               }
             }
             else
             {
               String outPath = DstPath + objectname;
               
-              if (recurse.booleanValue()) {
-                int subCount = processFolderAssets(srcPath, outPath, Boolean.valueOf(true));
+              if (recurse) {
+                int subCount = processFolderAssets(srcPath, outPath, Boolean.TRUE);
                 
                 if (subCount != 0)
                 {
@@ -202,7 +202,7 @@ public class AudioZipHasher
   }
   
 
-  protected void processVirtualFolderAssets(String inputPath, String outputPath, Boolean recurse)
+  protected void processVirtualFolderAssets(String inputPath, String outputPath)
   {
     String DstPath = outputPath;
     String[] files = null;
@@ -260,16 +260,14 @@ public class AudioZipHasher
 
 
 
-              processVirtualFolderAssets(srcPath, outputPath, Boolean.valueOf(true));
+              processVirtualFolderAssets(srcPath, outputPath);
             }
           }
           else
           {
             String outPath = DstPath + objectname;
-            
-            if (recurse.booleanValue()) {
-              processFolderAssets(srcPath, outPath, Boolean.valueOf(true));
-            }
+
+            processFolderAssets(srcPath, outPath, Boolean.TRUE);
           }
         }
         else if (element.isFile())

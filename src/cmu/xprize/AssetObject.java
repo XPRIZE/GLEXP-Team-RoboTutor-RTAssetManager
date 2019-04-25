@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
 public class AssetObject
   implements ILoadableObject
 {
@@ -23,7 +22,8 @@ public class AssetObject
   public AssetObject(String name)
   {
     this.assetName = name;
-    this.versionPath = (this.assetName + "." + this.currentVersion + "." + this.currentRelease + "." + this.currentUpdate);
+    this.versionPath = (this.assetName + "." + this.currentVersion + "." + this.currentRelease + "." + this.currentUpdate); // TODO change this annoying 1.1.0
+    // XXX e.g. English_TutorAudio.1.1.0
   }
   
   public String getVersionedName() {
@@ -33,26 +33,21 @@ public class AssetObject
   public String getName() {
     return this.assetName;
   }
-  
 
 
-
-
-
-
-
-
-
-
+  /**
+   * Load the asset information from an existing JSON file.
+   * @param asset_path
+   */
   public void loadAssetFactory(String asset_path)
   {
     try
     {
-      File assetFile = new File(this.versionPath);
+      File assetFile = new File(this.versionPath); // XXX e.g. English_TutorAudio.1.1.0
       
       if (assetFile.exists())
       {
-        loadJSON(new JSONObject(JSON_Helper.cacheData(asset_path, "DEFINED")), null);
+        loadJSON(new JSONObject(JSON_Helper.cacheData(asset_path, "DEFINED")), null); // loads existing
       }
     }
     catch (JSONException e) {
@@ -69,8 +64,12 @@ public class AssetObject
   
 
   public void toJSON(JSON_Util writer) {}
-  
 
+
+  /**
+   * Write the asset information to a JSON file.
+   * @param saveName
+   */
   public void saveAssetHistory(String saveName)
   {
     FileWriter out = null;

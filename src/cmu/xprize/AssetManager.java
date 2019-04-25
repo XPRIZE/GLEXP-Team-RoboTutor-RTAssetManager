@@ -5,8 +5,6 @@ package cmu.xprize;
  import java.io.IOException;
  import java.io.InputStream;
  import java.io.InputStreamReader;
- import java.nio.file.Files;
- import java.nio.file.Paths;
  import java.util.HashMap;
  import java.util.Iterator;
 
@@ -58,18 +56,11 @@ package cmu.xprize;
 
      // only using cmd, src, and compress
 
-     String commmand = vars.get("cmd") != null ? vars.get("cmd") : "noop";
-     Boolean debug = vars.get("debug") != null && Boolean.parseBoolean(vars.get("debug")); // alwayss false
-     Boolean clean = vars.get("clean") != null && Boolean.parseBoolean(vars.get("clean"));
-     Boolean compress = vars.get("compress") != null && Boolean.parseBoolean(vars.get("compress"));
-     String quality = vars.get("quality") != null ? vars.get("quality") : "low";
-     String language = vars.get("language") != null ? vars.get("language") : "en";
+     String commmand = vars.get("cmd") != null ? vars.get("cmd") : "noop"; // always build_dist
+     Boolean compress = vars.get("compress") != null && Boolean.parseBoolean(vars.get("compress")); // true or false
+     String quality = vars.get("quality") != null ? vars.get("quality") : "low"; // always low
      String SRCFOLDER = vars.get("src") != null ? vars.get("src") : "";
      String DSTFOLDER = vars.get("dst") != null ? vars.get("dst") : "";
-     String DATFOLDER = vars.get("dat") != null ? vars.get("dat") : "";
-
-     String indexPath = vars.get("index") != null ? vars.get("index") : "";
-     indexPath = "";
 
 
      AssetObject targetAsset = new AssetObject(SRCFOLDER);
@@ -90,61 +81,32 @@ package cmu.xprize;
          case "build_dist":
            assetInstaller.setQuality(quality);
 
-           String AssetFile = SRCFOLDER + ".json";
-           String IndexFile = SRCFOLDER + ".json";
+           String AssetFile;
 
+           AssetFile = SRCFOLDER + ".json";
+           //targetAsset.loadAssetFactory(BASEFOLDER + File.separator + AssetFile); // XXX e.g. <dir>/English_TutorAssets.1.1.0.json
+           // I don't think we need this...
 
-           if (debug) {
-             SRCFOLDER = "asset_test" + File.separator + SRCFOLDER;
-             AssetFile = SRCFOLDER + ".json";
-
-             targetAsset.loadAssetFactory(BASEFOLDER + File.separator + AssetFile);
-
-             DSTFOLDER = targetAsset.getVersionedName();
-
-             DSTFOLDER = "asset_test" + File.separator + DSTFOLDER;
-             LOG_FOLDER = LOG_FOLDER + File.separator + "asset_test";
-           } else {
-             AssetFile = SRCFOLDER + ".json";
-
-             targetAsset.loadAssetFactory(BASEFOLDER + File.separator + AssetFile); // TODO goes here every time
-
-             DSTFOLDER = targetAsset.getVersionedName();
-           }
+           DSTFOLDER = targetAsset.getVersionedName();
+           // XXX e.g. English_TutorAssets.1.1.0/
 
            if (compress) {
              DSTFOLDER = DSTFOLDER + ".zip";
-           }
-           if (clean) {
-             if (compress) {
-               System.out.println("Running: Zip-Clean");
-               try {
-                 String zipPath = BASEFOLDER + File.separator + DSTFOLDER;
-
-                 File zipFile = new File(zipPath);
-
-                 if (zipFile.exists()) {
-                   Files.delete(Paths.get(zipPath));
-                 }
-               } catch (IOException ex) {
-                 Logger.getLogger(AssetManager.class.getName()).log(Level.SEVERE, null, ex);
-               }
-             } else {
-               System.out.println("Running: Clean");
-               assetUtils.cleanFolder(BASEFOLDER + File.separator + DSTFOLDER, false);
-             }
+             // XXX e.g. English_TutorAssets.1.1.0.zip
            }
 
 
-             assetInstaller.storeAssets(BASEFOLDER + File.separator + SRCFOLDER, BASEFOLDER + File.separator + DSTFOLDER, RECURSE);
+           assetInstaller.storeAssets(BASEFOLDER + File.separator + SRCFOLDER, BASEFOLDER + File.separator + DSTFOLDER, RECURSE);
+           // copies from SRCFOLDER to DSTFOLDER
 
 
-           targetAsset.saveAssetHistory(BASEFOLDER + File.separator + AssetFile);
+           //targetAsset.saveAssetHistory(BASEFOLDER + File.separator + AssetFile);
 
 
+           // If not compress, then push onto tablet.
            if (!compress) {
 
-
+             // create a folder on tablet
              assetInstaller.createFolderAsset(ROOTASSETFOLDER);
 
              assetInstaller.createFolderAssets(BASEFOLDER + File.separator + DSTFOLDER, ROOTASSETFOLDER, RECURSE);

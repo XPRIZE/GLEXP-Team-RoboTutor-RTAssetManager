@@ -15,8 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-
-
 public class AudioHasher
 {
   private MessageDigest md;
@@ -87,9 +85,15 @@ public class AudioHasher
     
     return generateStrippedHash(text);
   }
-  
 
 
+  /**
+   * Copy the assets from inputPath into outputPath.
+   *
+   * @param inputPath
+   * @param outputPath
+   * @param recurse
+   */
   public void storeAssets(String inputPath, String outputPath, Boolean recurse)
   {
     File inputFile = new File(inputPath);
@@ -297,8 +301,13 @@ public class AudioHasher
       System.out.println("INFO: Date Check Failed: " + inputPath + " - reason: " + e);
     }
   }
-  
 
+
+  /**
+   * Create the folder outPath on the connected device.
+   * @param outPath
+   * @return
+   */
   public Boolean createFolderAsset(String outPath)
   {
     Runtime rt1 = Runtime.getRuntime();
