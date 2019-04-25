@@ -14,21 +14,6 @@ import org.json.JSONWriter;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class JSON_Util
 {
   private StringWriter outString;
