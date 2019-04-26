@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # RTAssetManager
 
 This is the source code for *RTAssetManager.jar*, which is used to generate hashed filenames of audio files and then push audio files onto a tablet.
