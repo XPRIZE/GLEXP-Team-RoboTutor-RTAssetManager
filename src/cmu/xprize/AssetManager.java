@@ -129,11 +129,19 @@ package cmu.xprize;
                  pr.waitFor();
                } catch (InterruptedException ex) {
                  Logger.getLogger(AssetManager.class.getName()).log(Level.SEVERE, null, ex);
+
+                 System.err.println("\nInterruptedException");
+                 System.err.println(ex.getMessage());
+                 ex.printStackTrace(System.err);
                }
 
                System.out.println("\nPush Complete");
              } catch (IOException ex) {
                Logger.getLogger(AssetManager.class.getName()).log(Level.SEVERE, null, ex);
+
+               System.err.println("\nIOException");
+               System.err.println(ex.getMessage());
+               ex.printStackTrace(System.err);
              }
            }
            break;
