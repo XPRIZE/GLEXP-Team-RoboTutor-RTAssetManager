@@ -113,8 +113,8 @@ package cmu.xprize;
 
              rt = Runtime.getRuntime();
              try {
-               System.out.println("\nExecuting ADB Push: adb push " + DSTFOLDER + "/assets sdcard/robotutor_assets");
-               Process pr = rt.exec("adb push " + DSTFOLDER + "/assets sdcard/robotutor_assets");
+               System.out.println("\nExecuting ADB Push: adb push " + DSTFOLDER + "/assets /sdcard/robotutor_assets");
+               Process pr = rt.exec("adb push " + DSTFOLDER + "/assets /sdcard/robotutor_assets");
 
                stdout = pr.getInputStream();
 
